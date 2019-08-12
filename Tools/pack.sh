@@ -63,6 +63,13 @@ function checkApp(){
 	  	echo "${VERIFY_RESULT}"
 	fi
 }
+function removeIpa(){
+    APP="${BUILD_APP_PATH}/";
+    ipa=$(find ${APP} -name '*.ipa' | head -n 1)
+    echo ${APP}
+    echo ${ipa}
+    rm -rf ${ipa}
+}
 
 function pack(){
 	TARGET_INFO_PLIST=${SRCROOT}/${TARGET_NAME}/Info.plist
@@ -95,7 +102,9 @@ function pack(){
 		unzip -oqq "${TARGET_IPA_PATH}" -d "${TEMP_PATH}"
 		cp -rf "${TEMP_PATH}/Payload/"*.app "${TARGET_APP_PUT_PATH}"
 	fi
-	
+#removeIpa
+	removeIpa
+
 	if [ -f "${BUILD_APP_PATH}/embedded.mobileprovision" ]; then
 		mv "${BUILD_APP_PATH}/embedded.mobileprovision" "${BUILD_APP_PATH}"/..
 	fi
@@ -223,6 +232,9 @@ function pack(){
 }
 
 if [[ "$1" == "codesign" ]]; then
+
+    removeIpa
+
 	${MONKEYPARSER} codesign -i "${EXPANDED_CODE_SIGN_IDENTITY}" -t "${BUILD_APP_PATH}"
 	if [[ ${MONKEYDEV_INSERT_DYLIB} == "NO" ]];then
 		rm -rf "${BUILD_APP_PATH}/Frameworks/lib${TARGET_NAME}Dylib.dylib"
