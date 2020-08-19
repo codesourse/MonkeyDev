@@ -140,7 +140,7 @@ if [[ "$1" ]]; then
 fi
 
 #更新一些基础文件和模板文件
-downloadGithubTarball "https://codeload.github.com/AloneMonkey/MonkeyDev/tar.gz/$branch" "$MonkeyDevPath" "MonkeyDev base"
+downloadGithubTarball "https://codeload.github.com/codesourse/MonkeyDev/tar.gz/$branch" "$MonkeyDevPath" "MonkeyDev base"
 downloadGithubTarball "https://codeload.github.com/AloneMonkey/MonkeyDev-Xcode-Templates/tar.gz/$branch" "$MonkeyDevPath/templates" "Xcode templates"
 
 #更新frida-ios-dump
